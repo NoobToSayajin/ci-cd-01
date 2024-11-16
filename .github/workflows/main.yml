@@ -26,13 +26,11 @@ jobs:
       - name: Validate
         run: npm run lint
         if: |
-          github.ref == 'refs/heads/main' &&
           github.event_name != 'push' &&
           !contains(github.event.head_commit.message, 'chore: release')
       - name: Test
         run: npm test
         if: |
-          github.ref == 'refs/heads/main' &&
           github.event_name != 'push' &&
           !contains(github.event.head_commit.message, 'chore: release')
   release:
