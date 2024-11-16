@@ -24,19 +24,12 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm test
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
     if: |
       github.ref == 'refs/heads/main' &&
       github.event_name != 'push' &&
       !contains(github.event.head_commit.message, 'chore: release')
-
-    steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up Git configuration
         run: |
           git config user.email "${{ secrets.USER_EMAIL }}"
@@ -44,7 +37,6 @@ jobs:
           git remote set-url origin "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
           git checkout ${{ github.ref_name }}
           git pull origin ${{ github.ref_name }} --rebase
-
       - name: Install dependencies and run release-it
         run: |
           npx --yes release-it --ci
