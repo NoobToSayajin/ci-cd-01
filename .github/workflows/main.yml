@@ -27,6 +27,9 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm test
+  realease:
+    runs-on:
+      ubuntu-latest
     if: |
       github.ref == 'refs/heads/main' &&
       github.event_name != 'push' &&
